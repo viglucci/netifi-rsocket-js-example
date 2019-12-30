@@ -1,0 +1,10 @@
+version: '3'
+services:
+    server_http:
+        build:
+            context: ./server-http
+            dockerfile: Dockerfile
+        volumes:
+            - ./server-http:/usr/src/app
+        ports:
+            - "80:3000"
