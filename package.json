@@ -1,0 +1,29 @@
+{
+  "name": "netifi-rsocket-js-example",
+  "version": "0.1.0",
+  "description": "Example application(s) for utilizing the netifi rsocket gateway and rsocket-js (client &amp; server).",
+  "main": "index.js",
+  "private": true,
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:proto": "node ./scripts/gen-proto.js services"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viglucci/netifi-rsocket-js-example.git"
+  },
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/viglucci/netifi-rsocket-js-example/issues"
+  },
+  "homepage": "https://github.com/viglucci/netifi-rsocket-js-example#readme",
+  "dependencies": {
+    "console-stamp": "^0.2.9",
+    "fs-jetpack": "^2.2.3",
+    "google-protobuf": "^3.11.2",
+    "rsocket-rpc-protobuf": "^0.1.6",
+    "shelljs": "^0.8.3",
+    "yargs": "^15.0.2"
+  }
+}
