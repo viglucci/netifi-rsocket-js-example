@@ -18,7 +18,9 @@
   },
   "homepage": "https://github.com/viglucci/netifi-rsocket-js-example#readme",
   "dependencies": {
+    "console-stamp": "^0.2.9",
     "express": "^4.17.1",
+    "morgan": "^1.9.1",
     "nodemon": "^2.0.2",
     "pug": "^2.0.4",
     "throng": "^4.0.0"

@@ -1,4 +1,5 @@
 const express = require('express');
+const requestLoggerFactory = require('morgan');
 const webpackFactory = require('webpack');
 const webpackDevMiddlewareFactory = require('webpack-dev-middleware');
 const webpackHotMiddlewareFactory = require('webpack-hot-middleware');
@@ -26,6 +27,8 @@ app.set('views', './resources/views');
 
 app.use(webpackDevMiddleware);
 app.use(webpackHotMiddleware);
+
+app.use(requestLoggerFactory('combined'));
 
 app.get('/', (req, res, next) => {
     res.render('index.pug');
