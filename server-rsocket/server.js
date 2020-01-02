@@ -15,8 +15,9 @@ throng({
     console.log('Starting master process');
   },
   start: async (id) => {
-    const getApp = require('./app');
-    const app = await getApp();
-    app.listen(HTTP_PORT, () => console.log(`Child process #${id} listening on HTTP port ${HTTP_PORT}`));
+    const getApps = require('./app');
+    const [netifiGateway, httpServer] = await getApps();
+    httpServer.listen(HTTP_PORT, () => console.log(`Child process #${id} listening on HTTP port ${HTTP_PORT}`));
+    netifiGateway._connect();
   }
 });
