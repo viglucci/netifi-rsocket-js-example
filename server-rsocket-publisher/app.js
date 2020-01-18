@@ -5,13 +5,11 @@ const {Netifi} = require('netifi-js-client');
 const {HelloServiceServer} = require('./generated/rsocket/services_rsocket_pb');
 const {DefaultHelloService} = require('./services/DefaultHelloService');
 
-const destinationName = 'server-rsocket';
 const groupName = 'netifi-rsocket-js-example.servers';
-
 const netifiGateway = Netifi.create({
     setup: {
         group: groupName,
-        destination: destinationName,
+        destination: 'server-rsocket-publisher',
         accessKey: process.env.NETIFI_AUTHENTICATION_0_ACCESSKEY,
         accessToken: process.env.NETIFI_AUTHENTICATION_0_ACCESSTOKEN,
     },
@@ -20,7 +18,7 @@ const netifiGateway = Netifi.create({
         wsCreator: (url) => {
             return new WebSocket(url);
         }
-    },
+    }
 });
 
 const helloService = new DefaultHelloService();
@@ -32,7 +30,7 @@ const httpApp = express();
 httpApp.use(requestLoggerFactory('combined'));
 
 httpApp.get('/', (req, res, next) => {
-    res.send('server-rsocket');
+    res.send('server-rsocket-publisher');
 });
 
 module.exports = async () => {

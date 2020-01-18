@@ -3,7 +3,7 @@ const {Single} = require('rsocket-flowable');
 
 class DefaultHelloService {
     constructor() {
-        this.serviceName = "com.viglucci.netifi.rsocket.js.example.service.HelloService";
+        this.serviceName = "DefaultHelloService";
     }
 
     sayHello(message) {

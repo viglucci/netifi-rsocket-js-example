@@ -1,0 +1,31 @@
+{
+  "name": "server-rsocket-consumer",
+  "version": "0.1.0",
+  "description": "",
+  "main": "server.js",
+  "private": true,
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon -L server.js --config nodemon.json"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/viglucci/netifi-rsocket-js-example.git"
+  },
+  "author": "viglucci <kviglucci@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/viglucci/netifi-rsocket-js-example/issues"
+  },
+  "homepage": "https://github.com/viglucci/netifi-rsocket-js-example#readme",
+  "dependencies": {
+    "console-stamp": "^0.2.9",
+    "express": "^4.17.1",
+    "morgan": "^1.9.1",
+    "netifi-js-client": "^1.6.10",
+    "nodemon": "^2.0.2",
+    "rsocket-flowable": "0.0.14",
+    "throng": "^4.0.0",
+    "ws": "^7.2.1"
+  }
+}

@@ -13,19 +13,35 @@ services:
             - netifi_rsocket_example_net
         depends_on:
             - netifi-broker
+            - server_rsocket_publisher
+            - server_rsocket_consumer
         env_file:
             - .env
-    server_rsocket:
+    server_rsocket_publisher:
         build:
-            context: ./server-rsocket
+            context: ./server-rsocket-publisher
             dockerfile: Dockerfile
         volumes:
-            - ./server-rsocket:/usr/src/app
+            - ./server-rsocket-publisher:/usr/src/app
             - ./shared/generated:/usr/src/app/generated
         networks:
             - netifi_rsocket_example_net
         depends_on:
             - netifi-broker
+        env_file:
+            - .env
+    server_rsocket_consumer:
+        build:
+            context: ./server-rsocket-consumer
+            dockerfile: Dockerfile
+        volumes:
+            - ./server-rsocket-consumer:/usr/src/app
+            - ./shared/generated:/usr/src/app/generated
+        networks:
+            - netifi_rsocket_example_net
+        depends_on:
+            - netifi-broker
+            - server_rsocket_publisher
         env_file:
             - .env
     netifi-broker:
