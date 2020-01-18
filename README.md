@@ -4,3 +4,9 @@ Example application(s) for utilizing the netifi rsocket gateway and rsocket-js (
 # Work in progress
 
 This repository is a work in progress, and once it is less so this README will contain more details.
+
+## Architecture Overview
+
+Made with [https://excalidraw.com/](https://excalidraw.com/)
+
+![Archicture Diagram](./architecture-diagram-netifi-js-example-2020118164014.png)
