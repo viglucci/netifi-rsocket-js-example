@@ -3,4 +3,4 @@ Example application(s) for utilizing the netifi rsocket gateway and rsocket-js (
 
 # Work in progress
 
-This repository is a work in progress.
+This repository is a work in progress, and once it is less so this README will contain more details.
