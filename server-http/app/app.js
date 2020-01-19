@@ -4,7 +4,7 @@ const webpackFactory = require('webpack');
 const webpackDevMiddlewareFactory = require('webpack-dev-middleware');
 const webpackHotMiddlewareFactory = require('webpack-hot-middleware');
 
-const webpackConfig = require('./webpack.config');
+const webpackConfig = require('../webpack.config');
 const webpackCompilerInstance = webpackFactory(webpackConfig);
 
 const webpackDevMiddleware = webpackDevMiddlewareFactory(webpackCompilerInstance, {

@@ -46,6 +46,8 @@ services:
             - .env
     netifi-broker:
         image: netifi/broker:${DOCKER_BROKER_IMAGE_VERSION}
+        ports:
+            - "8101:8101"
         networks:
             - netifi_rsocket_example_net
         environment:

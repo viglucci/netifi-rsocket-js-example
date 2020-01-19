@@ -1,6 +1,12 @@
 {
     "verbose": true,
+    "watch": [
+        "server.js",
+        "app/**/*.js"
+    ],
     "ignore": [
+        ".git",
+        "node_modules/**/node_modules",
         "resources/*.js"
     ]
 }

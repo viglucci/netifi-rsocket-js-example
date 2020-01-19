@@ -36,6 +36,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.HotModuleReplacementPlugin(),
+        new webpack.DefinePlugin({
+            'process.env.NETIFI_AUTHENTICATION_0_ACCESSKEY': JSON.stringify(process.env.NETIFI_AUTHENTICATION_0_ACCESSKEY),
+            'process.env.NETIFI_AUTHENTICATION_0_ACCESSTOKEN': JSON.stringify(process.env.NETIFI_AUTHENTICATION_0_ACCESSTOKEN)
+        })
     ]
 };
