@@ -31,7 +31,7 @@ request.setName('World');
 const executeRequest = () => {
     helloServiceClient.sayHello(request).subscribe({
         onComplete: (response) => {
-            console.log(`HelloService response recieved from with message: ${response.getMessage()}`);
+            console.log(`HelloService response recieved with message: ${response.getMessage()}`);
         },
         onError: (error) => {
             console.log(`HelloService responded with error: ${error.name}`);
