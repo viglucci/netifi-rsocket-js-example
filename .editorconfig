@@ -12,5 +12,9 @@ end_of_line = lf
 indent_style = space
 indent_size = 2
 
+[.yml]
+indent_style = space
+indent_size = 2
+
 [*.{js,jsx}]
 quote_style = single

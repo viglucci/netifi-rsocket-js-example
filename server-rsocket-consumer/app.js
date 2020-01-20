@@ -26,7 +26,7 @@ const gatewayConnection = netifiGateway.group(serversGroupName);
 const helloServiceClient = new HelloServiceClient(gatewayConnection);
 
 const request = new HelloRequest();
-request.setName('World');
+request.setName('Server RSocket Consumer');
 
 const executeRequest = () => {
     helloServiceClient.sayHello(request).subscribe({

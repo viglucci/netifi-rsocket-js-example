@@ -9,7 +9,7 @@ export default () => {
         console.log(helloService);
         if (helloService) {
             const request = new HelloRequest();
-            request.setName('World');
+            request.setName('React App');
             helloService.sayHello(request).subscribe({
                 onComplete: (response) => {
                     console.log(`HelloService response recieved with message: ${response.getMessage()}`);
