@@ -14,6 +14,16 @@ const webpackDevMiddleware = webpackDevMiddlewareFactory(webpackCompilerInstance
     watchOptions: webpackConfig.watchOptions
 });
 
+const func = (a) => {
+    return a
+};
+
+func();
+
+if (func()) {
+    return 1;
+}
+
 const webpackHotMiddleware = webpackHotMiddlewareFactory(webpackCompilerInstance, {
     path: '/__webpack_hmr',
     heartbeat: 10 * 1000,
@@ -30,7 +40,7 @@ app.use(webpackHotMiddleware);
 
 app.use(requestLoggerFactory('combined'));
 
-app.get('/', (req, res, next) => {
+app.get('/', (req, res) => {
     res.render('index.pug');
 });
 

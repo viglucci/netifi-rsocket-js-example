@@ -1,4 +1,4 @@
-version: '3'
+version: "3"
 services:
     server_http:
         build:
@@ -17,6 +17,7 @@ services:
             - server_rsocket_consumer
         env_file:
             - .env
+
     server_rsocket_publisher:
         build:
             context: ./server-rsocket-publisher
@@ -30,6 +31,7 @@ services:
             - netifi-broker
         env_file:
             - .env
+
     server_rsocket_consumer:
         build:
             context: ./server-rsocket-consumer
@@ -44,14 +46,68 @@ services:
             - server_rsocket_publisher
         env_file:
             - .env
+
     netifi-broker:
         image: netifi/broker:${DOCKER_BROKER_IMAGE_VERSION}
         ports:
             - "8101:8101"
+            - "8888:8888"
         networks:
             - netifi_rsocket_example_net
         environment:
-            - "BROKER_SERVER_OPTS=-Dnetifi.broker.ssl.disabled=${NETIFI_BROKER_SSL_DISABLED} -Dnetifi.broker.cluster.clusterName=${NETIFI_BROKER_CLUSTER_CLUSTERNAME} -Dnetifi.authentication.0.accessKey=${NETIFI_AUTHENTICATION_0_ACCESSKEY} -Dnetifi.authentication.0.accessToken=${NETIFI_AUTHENTICATION_0_ACCESSTOKEN} -Dnetifi.broker.admin.accessKey=${NETIFI_BROKER_ADMIN_ACCESSKEY} -Dnetifi.broker.admin.accessToken=${NETIFI_BROKER_ADMIN_ACCESSTOKEN} -Dnetifi.broker.admin.address=0.0.0.0 -Dnetifi.broker.admin.publicAddress=127.0.0.1 -Dnetifi.broker.admin.port=6001 -Dnetifi.broker.cluster.address=0.0.0.0 -Dnetifi.broker.cluster.publicAddress=127.0.0.1 -Dnetifi.broker.cluster.port=7001 -Dnetifi.broker.tcp.address=0.0.0.0 -Dnetifi.broker.tcp.publicAddress=127.0.0.1 -Dnetifi.broker.tcp.port=8001 -Dnetifi.broker.websocket.address=0.0.0.0 -Dnetifi.broker.websocket.publicAddress=127.0.0.1 -Dnetifi.broker.websocket.port=8101"
+            - "BROKER_SERVER_OPTS=-Dnetifi.authentication.0.accessKey=${NETIFI_AUTHENTICATION_0_ACCESSKEY} -Dnetifi.authentication.0.accessToken=${NETIFI_AUTHENTICATION_0_ACCESSTOKEN}"
+            - SSL_DISABLED=true
+            - METRICS_BIND_ADDRESS=0.0.0.0
+            - METRICS_BIND_PORT=8888
+            - ADMIN_ACCESS_KEY=9007199254740991
+            - ADMIN_ACCESS_TOKEN=kTBDVtfRBO4tHOnZzSyY5ym2kfY=
+            - ADMIN_PORT=6001
+            - CLUSTER_ADDRESS=0.0.0.0
+            - CLUSTER_PUBLIC_ADDRESS=127.0.0.1
+            - CLUSTER_PORT=7001
+            - BROKER_ADDRESS=0.0.0.0
+            - BROKER_PUBLIC_ADDRESS=127.0.0.1
+            - BROKER_PORT=8001
+            - WEBSOCKET_BROKER_ADDRESS=0.0.0.0
+            - WEBSOCKET_BROKER_PUBLIC_ADDRESS=127.0.0.1
+            - WEBSOCKET_BROKER_PORT=8101
+            - PROMETHEUS_BRIDGE=true
+    prometheus:
+        image: prom/prometheus
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./prometheus/:/etc/prometheus/
+            - ./.prometheus_data:/prometheus
+        networks:
+            - netifi_rsocket_example_net
+        command:
+            - "--config.file=/etc/prometheus/prometheus.yml"
+            - "--storage.tsdb.path=/prometheus"
+            - "--web.console.libraries=/usr/share/prometheus/console_libraries"
+            - "--web.console.templates=/usr/share/prometheus/consoles"
+        restart: always
+
+    grafana:
+        image: grafana/grafana
+        user: "104"
+        depends_on:
+            - prometheus
+        ports:
+            - 3000:3000
+        volumes:
+            - ./.grafana_data:/var/lib/grafana
+            - ./grafana/provisioning:/etc/grafana/provisioning
+        env_file:
+            - ./grafana/config.monitoring
+        networks:
+            - netifi_rsocket_example_net
+        restart: always
+
 networks:
     netifi_rsocket_example_net:
         driver: bridge
+
+volumes:
+    prometheus_data:
+    grafana_data:

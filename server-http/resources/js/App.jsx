@@ -2,14 +2,14 @@ import React, { useEffect, useState } from 'react';
 import { HelloRequest } from '../../generated/rsocket/services_pb';
 import useHelloService from './useHelloService';
 
-export default () => {
+const App = () => {
     const helloService = useHelloService();
     const [messages, setMessages] = useState([]);
     useEffect(() => {
         console.log(helloService);
         if (helloService) {
             const request = new HelloRequest();
-            request.setName('World');
+            request.setName('React App');
             helloService.sayHello(request).subscribe({
                 onComplete: (response) => {
                     console.log(`HelloService response recieved with message: ${response.getMessage()}`);
@@ -37,4 +37,5 @@ export default () => {
         </div>
     );
 };
-1
+
+export default App;
