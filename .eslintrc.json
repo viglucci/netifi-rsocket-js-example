@@ -1,0 +1,58 @@
+{
+    "extends": [
+        "eslint:recommended"
+    ],
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "parser": "babel-eslint",
+    "plugins": [
+        "editorconfig"
+    ],
+    "ignorePatterns": [
+        "generated/",
+        "node_modules/"
+    ],
+    "rules": {
+        "no-unused-vars": [
+            "warn",
+            {
+                "vars": "all",
+                "args": "after-used",
+                "ignoreRestSiblings": false
+            }
+        ],
+        "arrow-parens": [
+            "error"
+        ],
+        "brace-style": [
+            "error",
+            "1tbs",
+            {
+                "allowSingleLine": false
+            }
+        ],
+        "curly": [
+            "error",
+            "all"
+        ],
+        "space-before-blocks": [
+            "error"
+        ],
+        "no-trailing-spaces": [
+            "error"
+        ],
+        "no-multiple-empty-lines": [
+            "error"
+        ],
+        "indent": [
+            "error",
+            4
+        ],
+        "arrow-body-style": [
+            "error",
+            "always"
+        ]
+    }
+}
