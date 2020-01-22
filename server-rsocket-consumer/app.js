@@ -1,9 +1,14 @@
 const express = require('express');
 const requestLoggerFactory = require('morgan');
 const WebSocket = require('ws');
-const {Netifi} = require('netifi-js-client');
-const {HelloServiceClient} = require('./generated/rsocket/services_rsocket_pb');
-const {HelloRequest} = require('./generated/rsocket/services_pb');
+const { Netifi } = require('netifi-js-client');
+const { HelloServiceClient } = require('./generated/rsocket/services_rsocket_pb');
+const { HelloRequest } = require('./generated/rsocket/services_pb');
+const {
+    SimpleMeterRegistry,
+    MetricsSnapshotHandlerClient,
+    MetricsExporter
+} = require('rsocket-rpc-metrics');
 
 const clientGroupName = 'netifi-rsocket-js-example.clients';
 const serversGroupName = 'netifi-rsocket-js-example.servers';
@@ -22,14 +27,28 @@ const netifiGateway = Netifi.create({
     }
 });
 
-const gatewayConnection = netifiGateway.group(serversGroupName);
-const helloServiceClient = new HelloServiceClient(gatewayConnection);
+const meterRegistry = new SimpleMeterRegistry();
 
-const request = new HelloRequest();
-request.setName('Server RSocket Consumer');
+const metricsClient = new MetricsSnapshotHandlerClient(
+    netifiGateway.group('com.netifi.broker.metrics')
+);
 
-const executeRequest = () => {
-    helloServiceClient.sayHello(request).subscribe({
+const metricsExporter = new MetricsExporter(
+    metricsClient,
+    meterRegistry,
+    5, // 5 seconds
+    1024,
+);
+
+const gatewayConnectionA = netifiGateway.group(serversGroupName);
+const helloServiceClientA = new HelloServiceClient(gatewayConnectionA, undefined, meterRegistry);
+
+metricsExporter.start();
+
+setInterval(() => {
+    const request = new HelloRequest();
+    request.setName('Server RSocket Consumer Client A');
+    helloServiceClientA.sayHello(request).subscribe({
         onComplete: (response) => {
             console.log(`HelloService response recieved with message: ${response.getMessage()}`);
         },
@@ -38,19 +57,13 @@ const executeRequest = () => {
             console.error(error);
         }
     });
-};
-
-executeRequest();
-
-setInterval(() => {
-   executeRequest();
 }, 3000);
 
 const httpApp = express();
 
 httpApp.use(requestLoggerFactory('combined'));
 
-httpApp.get('/', (req, res, next) => {
+httpApp.get('/', (req, res) => {
     res.send('server-rsocket-consumer');
 });
 

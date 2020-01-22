@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { HelloRequest } from '../../generated/rsocket/services_pb';
 import useHelloService from './useHelloService';
 
-export default () => {
+const App = () => {
     const helloService = useHelloService();
     const [messages, setMessages] = useState([]);
     useEffect(() => {
@@ -37,4 +37,5 @@ export default () => {
         </div>
     );
 };
-1
+
+export default App;

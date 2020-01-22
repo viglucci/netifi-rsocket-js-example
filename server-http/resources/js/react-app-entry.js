@@ -4,4 +4,4 @@ import App from './App.jsx';
 
 const mount = document.querySelector('#app-mount');
 
-ReactDOM.render(<App />, document.querySelector('#app-mount'));
+ReactDOM.render(<App />, mount);
