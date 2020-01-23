@@ -2,10 +2,21 @@ syntax = "proto3";
 
 package com.viglucci.netifi.rsocket.js.example.service;
 
+import "google/protobuf/empty.proto";
+
 service HelloService {
 
-    // Returns a Hello World Message
+    // single request no response
+    rpc SayHelloFAF (HelloRequest) returns (google.protobuf.Empty) {}
+
+    // single request single response
     rpc SayHello (HelloRequest) returns (HelloResponse) {}
+
+    // single request many responses
+    rpc SayHelloStreamResponses (HelloRequest) returns (stream HelloResponse) {}
+
+    // many request many responses
+    rpc StreamSayHelloAndResponses (stream HelloRequest) returns (stream HelloResponse) {}
 }
 
 message HelloRequest {

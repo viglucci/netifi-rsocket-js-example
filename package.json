@@ -6,7 +6,7 @@
     "private": true,
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "build:proto": "node ./scripts/gen-proto.js services"
+        "build:proto": "node ./scripts/gen-proto.js HelloService"
     },
     "repository": {
         "type": "git",

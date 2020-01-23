@@ -2,7 +2,7 @@ const express = require('express');
 const requestLoggerFactory = require('morgan');
 const WebSocket = require('ws');
 const { Netifi } = require('netifi-js-client');
-const { HelloServiceServer } = require('./generated/rsocket/services_rsocket_pb');
+const { HelloServiceServer } = require('./generated/rsocket/HelloService_rsocket_pb');
 const { DefaultHelloService } = require('./services/DefaultHelloService');
 const {
     SimpleMeterRegistry,
