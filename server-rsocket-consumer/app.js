@@ -58,7 +58,7 @@ const runStreamCall = () => {
             // return console.log('done')
             setTimeout(() => {
                 runStreamCall();
-            }, 300);
+            }, getRandomInt(300, 3000));
         },
         onError: (error) => {
             return console.error(error)
