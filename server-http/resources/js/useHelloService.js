@@ -1,6 +1,6 @@
 import { useLayoutEffect, useState } from 'react';
 const { Netifi } = require('netifi-js-client');
-const { HelloServiceClient } = require('../../generated/rsocket/services_rsocket_pb');
+const { HelloServiceClient } = require('../../generated/rsocket/HelloService_rsocket_pb');
 const clientGroupName = 'netifi-rsocket-js-example.clients';
 const serversGroupName = 'netifi-rsocket-js-example.servers';
 

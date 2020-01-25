@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { HelloRequest } from '../../generated/rsocket/services_pb';
+import { HelloRequest } from '../../generated/rsocket/HelloService_pb';
 import useHelloService from './useHelloService';
 
 const App = () => {

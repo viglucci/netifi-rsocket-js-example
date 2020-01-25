@@ -1,5 +1,6 @@
 const consoleDecorator = require('console-stamp');
 const throng = require('throng');
+const app = require('./app');
 
 consoleDecorator(console, {
     label: true,
@@ -15,11 +16,20 @@ throng({
         console.log('Starting master process');
     },
     start: async (id) => {
-        const getApps = require('./app');
-        const [netifiGateway, httpServer] = await getApps();
-        httpServer.listen(HTTP_PORT, () => {
-            return console.log(`Child process #${id} listening on HTTP port ${HTTP_PORT}`)
+        console.log(`Child process #${id} started`);
+        app._connect().subscribe({
+            onComplete: () => {
+                console.log("RSocket connection established.");
+            },
+            onError: (err) => {
+                console.error(err);
+            }
         });
-        netifiGateway._connect();
+        // const getApps = require('./app');
+        // const [netifiGateway, httpServer] = await getApps();
+        // httpServer.listen(HTTP_PORT, () => {
+        //     return console.log(`Child process #${id} listening on HTTP port ${HTTP_PORT}`)
+        // });
+        // netifiGateway._connect();
     }
 });

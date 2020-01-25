@@ -1,5 +1,3 @@
-const express = require('express');
-const requestLoggerFactory = require('morgan');
 const WebSocket = require('ws');
 const { Netifi } = require('netifi-js-client');
 const { HelloServiceServer } = require('./generated/rsocket/HelloService_rsocket_pb');
@@ -10,11 +8,14 @@ const {
     MetricsExporter
 } = require('rsocket-rpc-metrics');
 
+const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
 const groupName = 'netifi-rsocket-js-example.servers';
+const desginationName = `server-rsocket-publisher-${id}`;
 const netifiGateway = Netifi.create({
     setup: {
         group: groupName,
-        destination: 'server-rsocket-publisher',
+        destination: desginationName,
         accessKey: process.env.NETIFI_AUTHENTICATION_0_ACCESSKEY,
         accessToken: process.env.NETIFI_AUTHENTICATION_0_ACCESSTOKEN,
     },
@@ -41,22 +42,9 @@ const metricsExporter = new MetricsExporter(
 
 metricsExporter.start();
 
-const helloService = new DefaultHelloService();
+const helloService = new DefaultHelloService(desginationName);
 const helloServiceServer = new HelloServiceServer(helloService, undefined, meterRegistry);
 
 netifiGateway.addService('com.viglucci.netifi.rsocket.js.example.service.HelloService', helloServiceServer);
 
-const httpApp = express();
-
-httpApp.use(requestLoggerFactory('combined'));
-
-httpApp.get('/', (req, res) => {
-    res.send('server-rsocket-publisher');
-});
-
-module.exports = async () => {
-    return Promise.all([
-        netifiGateway,
-        httpApp
-    ]);
-};
+module.exports = netifiGateway;

@@ -3,8 +3,8 @@ const { Single, Flowable } = require('rsocket-flowable');
 const { Empty } = require('google-protobuf/google/protobuf/empty_pb.js');
 
 class DefaultHelloService {
-    constructor() {
-        this.serviceName = "DefaultHelloService";
+    constructor(desginationName) {
+        this.serviceName = `DefaultHelloService(${desginationName})`;
     }
 
     sayHello(message) {
@@ -30,11 +30,23 @@ class DefaultHelloService {
                 cancel: () => {/* no-op */ },
                 request: (n) => {
                     while (n--) {
-                        const responseMessage = new HelloResponse();
-                        responseMessage.setMessage(`Hello, ${messageName} from ${this.serviceName} - ${(new Date()).toISOString()}`);
-                        subscriber.onNext(responseMessage);
+                        let completed = false;
+                        let completedCalled = false;
+                        if (n <= 0) {
+                            completed = true;
+                        }
+                        setImmediate(() => {
+                            if (!completedCalled) {
+                                const responseMessage = new HelloResponse();
+                                responseMessage.setMessage(`Hello, ${messageName} from ${this.serviceName} - ${(new Date()).toISOString()}`);
+                                subscriber.onNext(responseMessage);
+                            }
+                            if (completed && !completedCalled) {
+                                completedCalled = true;
+                                subscriber.onComplete();
+                            }
+                        });
                     }
-                    subscriber.onComplete();
                 }
             });
         });
