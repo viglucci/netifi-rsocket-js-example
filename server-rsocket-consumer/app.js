@@ -41,11 +41,6 @@ const metricsExporter = new MetricsExporter(
 );
 
 const gatewayConnectionA = netifiGateway.group(serversGroupName);
-gatewayConnectionA._connect().subscribe({
-    onSubscribe: () => {
-        console.log(this.arguments)
-    }
-});
 const helloServiceClientA = new HelloServiceClient(gatewayConnectionA, undefined, meterRegistry);
 
 metricsExporter.start();
