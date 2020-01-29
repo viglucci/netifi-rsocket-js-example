@@ -12,7 +12,6 @@ class DefaultHelloService {
         console.log(`[sayHello] Received Hello from ${messageName}`);
         const responseMessage = new HelloResponse();
         responseMessage.setMessage(`Hello, ${messageName} from ${this.serviceName}`);
-        console.log(`Responding...`);
         return Single.of(responseMessage);
     }
 
@@ -34,6 +33,7 @@ class DefaultHelloService {
                         responseMessage.setMessage(`Hello, ${messageName} from ${this.serviceName} - ${(new Date()).toISOString()}`);
                         subscriber.onNext(responseMessage);
                     }
+                    subscriber.onComplete();
                 }
             });
         });

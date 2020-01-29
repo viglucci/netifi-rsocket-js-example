@@ -8,10 +8,8 @@ consoleDecorator(console, {
     metadata: `[${process.pid}]`
 });
 
-const HTTP_PORT = process.env.NODE_HTTP_PORT;
-
 throng({
-    workers: 1,
+    workers: 25,
     master: () => {
         console.log('Starting master process');
     },
@@ -25,11 +23,5 @@ throng({
                 console.error(err);
             }
         });
-        // const getApps = require('./app');
-        // const [netifiGateway, httpServer] = await getApps();
-        // httpServer.listen(HTTP_PORT, () => {
-        //     return console.log(`Child process #${id} listening on HTTP port ${HTTP_PORT}`)
-        // });
-        // netifiGateway._connect();
     }
 });

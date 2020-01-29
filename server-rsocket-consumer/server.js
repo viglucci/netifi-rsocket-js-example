@@ -10,7 +10,7 @@ consoleDecorator(console, {
 const HTTP_PORT = process.env.NODE_HTTP_PORT;
 
 throng({
-    workers: 1,
+    workers: 5,
     master: () => {
         console.log('Starting master process');
     },

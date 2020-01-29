@@ -10,12 +10,14 @@ const {
     MetricsExporter
 } = require('rsocket-rpc-metrics');
 
+const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
 const clientGroupName = 'netifi-rsocket-js-example.clients';
 const serversGroupName = 'netifi-rsocket-js-example.servers';
 const netifiGateway = Netifi.create({
     setup: {
         group: clientGroupName,
-        destination: 'server-rsocket-consumer',
+        destination: `server-rsocket-consumer-${id}`,
         accessKey: process.env.NETIFI_AUTHENTICATION_0_ACCESSKEY,
         accessToken: process.env.NETIFI_AUTHENTICATION_0_ACCESSTOKEN,
     },
@@ -55,8 +57,8 @@ function getRandomInt(lower, upper) {
 const runStreamCall = () => {
     helloServiceClientA.sayHelloStreamResponses(request).subscribe({
         onComplete: () => {
-            const timeoutDuration = 3000;
-            // const timeoutDuration = getRandomInt(300, 500);
+            // const timeoutDuration = 3000;
+            const timeoutDuration = getRandomInt(100, 300);
             setTimeout(() => {
                 runStreamCall();
             }, timeoutDuration);
@@ -67,9 +69,8 @@ const runStreamCall = () => {
         onNext: (response) => {
             console.log(`HelloService response recieved with message: ${response.getMessage()}`);
         },
-        // Nothing happens until `request(n)` is called
         onSubscribe: (sub) => {
-            return sub.request(getRandomInt(1, 1));
+            return sub.request(getRandomInt(1, 10));
         },
     });
 };
@@ -102,7 +103,7 @@ runStreamCall();
 //             console.error(error);
 //         }
 //     });
-// }, 500);
+// }, 100);
 
 const httpApp = express();
 
