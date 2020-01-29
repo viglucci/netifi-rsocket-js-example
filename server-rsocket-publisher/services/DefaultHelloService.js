@@ -30,22 +30,9 @@ class DefaultHelloService {
                 cancel: () => {/* no-op */ },
                 request: (n) => {
                     while (n--) {
-                        let completed = false;
-                        let completedCalled = false;
-                        if (n <= 0) {
-                            completed = true;
-                        }
-                        setImmediate(() => {
-                            if (!completedCalled) {
-                                const responseMessage = new HelloResponse();
-                                responseMessage.setMessage(`Hello, ${messageName} from ${this.serviceName} - ${(new Date()).toISOString()}`);
-                                subscriber.onNext(responseMessage);
-                            }
-                            if (completed && !completedCalled) {
-                                completedCalled = true;
-                                subscriber.onComplete();
-                            }
-                        });
+                        const responseMessage = new HelloResponse();
+                        responseMessage.setMessage(`Hello, ${messageName} from ${this.serviceName} - ${(new Date()).toISOString()}`);
+                        subscriber.onNext(responseMessage);
                     }
                 }
             });
