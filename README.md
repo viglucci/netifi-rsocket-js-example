@@ -5,7 +5,15 @@ Example application(s) for utilizing the netifi rsocket gateway and rsocket-js (
 
 This repository is a work in progress, and once it is less so this README will contain more details.
 
-## Architecture Overview
+# Docker
+
+Run the example(s) using docker-compose
+
+```
+docker-compose up
+```
+
+# Architecture Overview
 
 Made with [https://excalidraw.com/](https://excalidraw.com/)
 
