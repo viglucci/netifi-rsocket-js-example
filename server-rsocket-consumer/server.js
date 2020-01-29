@@ -20,6 +20,13 @@ throng({
         httpServer.listen(HTTP_PORT, () => {
             return console.log(`Child process #${id} listening on HTTP port ${HTTP_PORT}`)
         });
-        netifiGateway._connect();
+        netifiGateway._connect().subscribe({
+            onComplete: () => {
+                console.log("RSocket connection established.");
+            },
+            onError: (err) => {
+                console.error(err);
+            }
+        });
     }
 });
