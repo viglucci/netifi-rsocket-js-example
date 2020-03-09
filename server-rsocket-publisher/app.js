@@ -11,11 +11,11 @@ const {
 const id = Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
 
 const groupName = 'netifi-rsocket-js-example.servers';
-const desginationName = `server-rsocket-publisher-${id}`;
+const destinationName = `server-rsocket-publisher-${id}`;
 const netifiGateway = Netifi.create({
     setup: {
         group: groupName,
-        destination: desginationName,
+        destination: destinationName,
         accessKey: process.env.NETIFI_AUTHENTICATION_0_ACCESSKEY,
         accessToken: process.env.NETIFI_AUTHENTICATION_0_ACCESSTOKEN,
     },
@@ -42,7 +42,7 @@ const metricsExporter = new MetricsExporter(
 
 metricsExporter.start();
 
-const helloService = new DefaultHelloService(desginationName);
+const helloService = new DefaultHelloService(destinationName);
 const helloServiceServer = new HelloServiceServer(helloService, undefined, meterRegistry);
 
 netifiGateway.addService('com.viglucci.netifi.rsocket.js.example.service.HelloService', helloServiceServer);

@@ -14,16 +14,6 @@ const webpackDevMiddleware = webpackDevMiddlewareFactory(webpackCompilerInstance
     watchOptions: webpackConfig.watchOptions
 });
 
-const func = (a) => {
-    return a
-};
-
-func();
-
-if (func()) {
-    return 1;
-}
-
 const webpackHotMiddleware = webpackHotMiddlewareFactory(webpackCompilerInstance, {
     path: '/__webpack_hmr',
     heartbeat: 10 * 1000,
