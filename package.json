@@ -23,7 +23,7 @@
         "fs-jetpack": "^2.2.3",
         "google-protobuf": "^3.11.2",
         "rsocket-rpc-protobuf": "^0.1.6",
-        "shelljs": "^0.8.3",
+        "shelljs": "^0.8.5",
         "yargs": "^15.0.2"
     },
     "devDependencies": {
